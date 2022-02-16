@@ -4,7 +4,7 @@ import {startDijkstra} from "../../controllers/dijkstra_session"
 const router: Router = Router()
 
 
-router.get("/", startDijkstra)
+router.route("/").post(startDijkstra)
 
 router.get("/dij", ((req: Request, res: Response) => {
     res.send("res")
