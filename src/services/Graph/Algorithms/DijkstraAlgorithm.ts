@@ -1,68 +1,45 @@
 import {Pathfinding, ResultOfPathfinding} from "./Pathfinding";
 import {Destination, Vertex} from "../GraphAddons";
-import {BinaryHeap, Comparable, Heap} from "./helpers/Heap";
+import {FibonacciHeap, INode} from "@tyriar/fibonacci-heap"
 
-
-class VertexDistanceDijkstra implements Comparable<VertexDistanceDijkstra> {
-
-    private readonly _vertex: Vertex;
-    private _distance: number;
-
-    constructor(vertex: Vertex, distance : number) {
-        this._vertex = vertex;
-        this._distance = distance;
-    }
-
-    get distance(): number {
-        return this._distance;
-    }
-
-    set distance(value: number) {
-        this._distance = value;
-    }
-
-    get vertex(): Vertex {
-        return this._vertex;
-    }
-
-
-    compareTo(obj1: VertexDistanceDijkstra): number {
-        return this._distance - obj1._distance;
-    }
-}
 
 export class DijkstraAlgorithm implements Pathfinding {
+
     findPath(graphMap: Map<Vertex, Set<Destination>>, startVertex: Vertex, endVertex: Vertex): ResultOfPathfinding {
-        const numberOfVertices = 34
         //Heap to get next Vertex to look at
-        let heap: Heap<VertexDistanceDijkstra> = new BinaryHeap(numberOfVertices)
+        let fibHeap:FibonacciHeap<number, Vertex> = new FibonacciHeap()
+        let fibHeapMap: Map<Vertex, INode<number, Vertex>> = new Map()
         //ParentMap to find shortestPath
         let parentMap: Map<Vertex, Vertex> = new Map();
-        /*distanceMap to keep Track of the distances
-          Optional: add Relationship between heap and distanceMap
-          https://youtu.be/fRpsjKCfQjE?t=974
-         */
         let distanceMap: Map<Vertex, number> = new Map();
-        heap.insert(new VertexDistanceDijkstra(startVertex, 0))
+
+        let startNode = fibHeap.insert(0, startVertex)
+        fibHeapMap.set(startVertex, startNode)
         distanceMap.set(startVertex, 0)
 
-        while (heap.getSize() > 0) {
-            let current = heap.deleteMin();
-            if (current == endVertex) {
+        while (!fibHeap.isEmpty()) {
+            let currentVertex: Vertex = fibHeap.extractMinimum()!.value!;
+            if (currentVertex == endVertex) {
                 break;
             }
-            let possibleNeighbours: Set<Destination> | undefined = graphMap.get(current)
-            if (possibleNeighbours == undefined) continue;
+            let possibleNeighbours: Set<Destination> = graphMap.get(currentVertex)!
             possibleNeighbours.forEach( (neighbour) => {
                 let weight = distanceMap.get(neighbour.endVertex)
-                let currentWeight =  distanceMap.get(current.vertex)
-                if (currentWeight == undefined) {
-                    return;
-                }
+                let currentWeight =  distanceMap.get(currentVertex)!
                 let possibleNewWeight = currentWeight + neighbour.weight
                 if (weight == undefined || weight > possibleNewWeight) {
                     distanceMap.set(neighbour.endVertex, possibleNewWeight);
-                    parentMap.set(neighbour.endVertex, current.vertex)
+                    parentMap.set(neighbour.endVertex, currentVertex)
+                    /*
+                     * Update heap or insert Heap
+                     */
+                    if (fibHeapMap.get(neighbour.endVertex) == undefined) {
+                        let node = fibHeap.insert(possibleNewWeight, neighbour.endVertex)
+                        fibHeapMap.set(neighbour.endVertex, node)
+                    } else {
+                        fibHeap.decreaseKey(fibHeapMap.get(neighbour.endVertex)!, possibleNewWeight)
+                    }
+
                 }
             })
 
