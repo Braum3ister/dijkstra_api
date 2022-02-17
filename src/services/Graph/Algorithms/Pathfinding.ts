@@ -5,18 +5,19 @@ export class ResultOfPathfinding {
     private distanceMap: Map<Vertex, number>;
     private startVertex: Vertex;
     private endVertex: Vertex;
+    private _finalDistance: number;
     constructor(parentMap: Map<Vertex, Vertex>, distanceMap: Map<Vertex, number>, startVertex: Vertex, endVertex: Vertex) {
         this.parentMap = parentMap;
         this.distanceMap = distanceMap;
         this.startVertex = startVertex;
         this.endVertex = endVertex;
+        this._finalDistance = distanceMap.get(endVertex)!
     }
 
 
-    toJSON() {
-        return {}
+    get finalDistance(): number {
+        return this._finalDistance;
     }
-
 }
 
 
