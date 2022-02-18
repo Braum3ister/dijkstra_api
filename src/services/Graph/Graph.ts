@@ -3,7 +3,7 @@ import {Pathfinding} from "./Algorithms/Pathfinding";
 
 
 export class WeightedDirectedGraph {
-    private readonly graphMap: Map<Vertex, Set<Destination>>;
+    protected readonly graphMap: Map<Vertex, Set<Destination>>;
 
     constructor() {
         this.graphMap = new Map();
@@ -31,4 +31,12 @@ export class WeightedDirectedGraph {
     findPath(algorithm: Pathfinding, startVertex: Vertex, endVertex: Vertex){
         return (algorithm.findPath(this.graphMap, startVertex, endVertex))
     }
+}
+
+export class WeightedUndirectedGraph extends WeightedDirectedGraph {
+    addEdge(vertex1: Vertex, vertex2:Vertex, weight:number) {
+        super.addEdge(vertex1, vertex2, weight)
+        super.addEdge(vertex2, vertex1, weight)
+    }
+
 }
