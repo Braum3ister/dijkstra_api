@@ -22,18 +22,28 @@ const dijkstraSchema2D = [
     body("start-point")
         .exists({checkFalsy : true})
         .custom((value) => {
-            console.log(typeof value)
-            return true
+            return Array.isArray(value) && value.length === 2
         }),
 
 
     body("end-point")
-        .exists({checkFalsy: true}),
+        .exists({checkFalsy: true})
+    .custom((value) => {
+        return Array.isArray(value) && value.length === 2
+    }),
 
 
     body("walls")
         .exists({
             checkNull : true
+        })
+        .custom((value) => {
+            value.forEach((posCoordinate: number[]) => {
+                if (posCoordinate.length !== 2) {
+                    return false;
+                }
+            })
+            return true;
         })
 ];
 
