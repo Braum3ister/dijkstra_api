@@ -5,30 +5,30 @@ import {FibonacciHeap, INode} from "@tyriar/fibonacci-heap"
 
 export class DijkstraAlgorithm implements Pathfinding {
 
-    findPath(graphMap: Map<Vertex, Set<Destination>>, startVertex: Vertex, endVertex: Vertex): ResultOfPathfinding {
+    findPath(graphMap: Map<string, Set<Destination>>, startVertex: Vertex, endVertex: Vertex): ResultOfPathfinding {
         //Heap to get next Vertex to look at
         let fibHeap:FibonacciHeap<number, Vertex> = new FibonacciHeap()
         let fibHeapMap: Map<Vertex, INode<number, Vertex>> = new Map()
         //ParentMap to find shortestPath
         let parentMap: Map<Vertex, Vertex> = new Map();
-        let distanceMap: Map<Vertex, number> = new Map();
+        let distanceMap: Map<string, number> = new Map();
 
         let startNode = fibHeap.insert(0, startVertex)
         fibHeapMap.set(startVertex, startNode)
-        distanceMap.set(startVertex, 0)
+        distanceMap.set(startVertex.toIdString(), 0)
 
         while (!fibHeap.isEmpty()) {
             let currentVertex: Vertex = fibHeap.extractMinimum()!.value!;
             if (currentVertex == endVertex) {
                 break;
             }
-            let possibleNeighbours: Set<Destination> = graphMap.get(currentVertex)!
+            let possibleNeighbours: Set<Destination> = graphMap.get(currentVertex.toIdString())!
             possibleNeighbours.forEach( (neighbour) => {
-                let weight = distanceMap.get(neighbour.endVertex)
-                let currentWeight =  distanceMap.get(currentVertex)!
+                let weight = distanceMap.get(neighbour.endVertex.toIdString(),)
+                let currentWeight =  distanceMap.get(currentVertex.toIdString())!
                 let possibleNewWeight = currentWeight + neighbour.weight
                 if (weight == undefined || weight > possibleNewWeight) {
-                    distanceMap.set(neighbour.endVertex, possibleNewWeight);
+                    distanceMap.set(neighbour.endVertex.toIdString(), possibleNewWeight);
                     parentMap.set(neighbour.endVertex, currentVertex)
                     /*
                      * Update heap or insert Heap

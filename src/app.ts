@@ -1,18 +1,18 @@
 import express from "express"
 import "dotenv/config"
-
+import logger from "./utils/logger"
 
 const app = express();
-const route = require("./routes/api/dijkstra")
+const apiRoute = require("./routes/Api")
 
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
-app.use("/dijkstra", route)
+app.use("/api", apiRoute)
 
 const PORT = process.env.PORT
 
 app.listen(PORT, () => {
-    console.log(`Server listening on Port: ${PORT}`)
-    console.log(`DevSever on: ${process.env.LOCAL_HOST}${process.env.PORT}`)
+    logger.info(`Server listening on Port: ${PORT}`)
+    logger.info(`DevSever on: ${process.env.LOCAL_HOST}${process.env.PORT}`)
 })

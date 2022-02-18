@@ -1,0 +1,14 @@
+POST http://localhost:6969/api/dijkstra
+Content-Type: application/json
+
+{
+  "height": 200,
+  "width" : 200,
+  "start": [0, 1],
+  "end": [8, 7],
+  "walls": [[1, 2], [3, 5], [5, 6]]
+
+}
+
+###
+

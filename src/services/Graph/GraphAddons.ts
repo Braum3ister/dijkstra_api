@@ -1,5 +1,6 @@
+import {Equality} from "../utils/GeneralSet";
 
-export class Vertex {
+export class Vertex implements Equality {
     private readonly name: string;
     constructor(name: string) {
         this.name = name;
@@ -9,6 +10,10 @@ export class Vertex {
         return {
             firstName: this.name
         }
+    }
+
+    toIdString(): string {
+        return this.name;
     }
 }
 

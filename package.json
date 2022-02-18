@@ -11,9 +11,13 @@
   },
   "dependencies": {
     "@tyriar/fibonacci-heap": "^2.0.9",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "express-validator": "^6.14.0"
   },
   "devDependencies": {
+    "pino-pretty": "^7.5.1",
+    "pino": "^7.8.0",
+    "dayjs": "^1.10.7",
     "chai": "^4.3.6",
     "mocha": "^9.2.0",
     "@types/mocha": "^9.1.0",
