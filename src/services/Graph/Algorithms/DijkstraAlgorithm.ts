@@ -19,7 +19,7 @@ export class DijkstraAlgorithm implements Pathfinding {
 
         while (!fibHeap.isEmpty()) {
             let currentVertex: Vertex = fibHeap.extractMinimum()!.value!;
-            if (currentVertex == endVertex) {
+            if (currentVertex.toIdString() === endVertex.toIdString()) {
                 break;
             }
             let possibleNeighbours: Set<Destination> = graphMap.get(currentVertex.toIdString())!

@@ -1,4 +1,4 @@
-import { body } from "express-validator"
+import {body} from "express-validator"
 
 
 const dijkstraSchema2D = [
@@ -7,44 +7,51 @@ const dijkstraSchema2D = [
             checkFalsy: true
         })
         .isInt({
-            min : 0
+            min: 0
         })
+        .toInt()
         .withMessage("Height must be a number > 0"),
     body("width")
         .exists({
             checkFalsy: true
         })
         .isInt({
-            min : 0
+            min: 0
         })
+        .toInt()
         .withMessage("Width must be a number > 0"),
 
-    body("start-point")
-        .exists({checkFalsy : true})
+    body("startPoint")
+        .exists({checkFalsy: true})
         .custom((value) => {
             return Array.isArray(value) && value.length === 2
-        }),
+        })
+        .toArray(),
 
 
-    body("end-point")
+    body("endPoint")
         .exists({checkFalsy: true})
-    .custom((value) => {
-        return Array.isArray(value) && value.length === 2
-    }),
+        .custom((value) => {
+            return Array.isArray(value) && value.length === 2
+        })
+        .toArray(),
 
 
     body("walls")
         .exists({
-            checkNull : true
+            checkNull: true
         })
         .custom((value) => {
             value.forEach((posCoordinate: number[]) => {
                 if (posCoordinate.length !== 2) {
-                    return false;
+                    throw new Error()
                 }
             })
             return true;
         })
+        .toArray()
+        .withMessage("Not valid Syntax for walls")
+
 ];
 
 export {dijkstraSchema2D}

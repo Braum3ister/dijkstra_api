@@ -43,7 +43,7 @@ export class WeightedUndirectedGraph extends WeightedDirectedGraph {
 }
 
 
-export function convertToAdjacencyList(height: number, width: number, blockedPos: Set<string>) {
+export function convertToWeightedGraph(height: number, width: number, blockedPos: Set<string>) {
     let weightedGraph = new WeightedDirectedGraph()
     for (let i = 0; i < height; i++) {
         for (let j = 0; j < width; j++) {

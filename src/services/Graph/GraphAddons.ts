@@ -8,7 +8,7 @@ export class Vertex implements Equality {
 
     toJSON() {
         return {
-            firstName: this.name
+            name: this.name
         }
     }
 

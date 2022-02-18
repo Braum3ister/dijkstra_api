@@ -2,10 +2,10 @@ POST http://localhost:6969/api/dijkstra
 Content-Type: application/json
 
 {
-  "height": 200,
-  "width" : 1,
-  "start-point": [0, 1],
-  "end-point": [8, 7],
+  "height": 20,
+  "width" : 10,
+  "startPoint": [0, 1],
+  "endPoint": [0, 7],
   "walls": [[1, 2], [3, 5], [5, 6]]
 
 }

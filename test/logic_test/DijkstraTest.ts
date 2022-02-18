@@ -1,5 +1,5 @@
 import {expect} from "chai"
-import {convertToAdjacencyList, WeightedDirectedGraph} from "../../src/services/Graph/Graph";
+import {convertToWeightedGraph, WeightedDirectedGraph} from "../../src/services/Graph/Graph";
 import {Vertex} from "../../src/services/Graph/GraphAddons";
 import {DijkstraAlgorithm} from "../../src/services/Graph/Algorithms/DijkstraAlgorithm";
 
@@ -51,7 +51,7 @@ describe("Dijkstra Test", () => {
     })
 
     it("Crate matrix Graph Dijkstra", () => {
-        let newWeightedGraph = convertToAdjacencyList(10, 10, new Set())
+        let newWeightedGraph = convertToWeightedGraph(10, 10, new Set())
         let startVertex = new Vertex("0,0")
         let endVertex = new Vertex("0,9")
         expect(newWeightedGraph.findPath(new DijkstraAlgorithm(), startVertex, endVertex).finalDistance).to.equal(9)

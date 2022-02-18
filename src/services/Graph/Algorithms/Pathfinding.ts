@@ -1,11 +1,12 @@
 import {Destination, Vertex} from "../GraphAddons";
 
+
 export class ResultOfPathfinding {
     private parentMap: Map<Vertex, Vertex>;
-    private distanceMap: Map<string, number>;
-    private startVertex: Vertex;
-    private endVertex: Vertex;
-    private _finalDistance: number;
+    private readonly distanceMap: Map<string, number>;
+    private readonly startVertex: Vertex;
+    private readonly endVertex: Vertex;
+    private readonly _finalDistance: number;
 
     constructor(parentMap: Map<Vertex, Vertex>, distanceMap: Map<string, number>, startVertex: Vertex, endVertex: Vertex) {
         this.parentMap = parentMap;
@@ -18,6 +19,15 @@ export class ResultOfPathfinding {
 
     get finalDistance(): number {
         return this._finalDistance;
+    }
+
+    toJSON() {
+        return {
+            start: this.startVertex,
+            end: this.endVertex,
+            distance: this.finalDistance,
+            distanceMap: Object.fromEntries(this.distanceMap)
+        }
     }
 }
 
