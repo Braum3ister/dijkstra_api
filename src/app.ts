@@ -1,10 +1,12 @@
 import express from "express"
 import "dotenv/config"
 import logger from "./utils/logger"
+const cors = require("cors")
 
 const app = express();
 const apiRoute = require("./routes/Api")
 
+app.use(cors())
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))

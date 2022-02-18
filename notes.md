@@ -2,10 +2,10 @@
 
 * Use Logger -implemented
 * Add Validation
-  * Schema
-  * Routing Validation
-* Initialize Search Object
-* Parse Result for Output
+  * Schema -done
+  * Routing Validation -done
+* Initialize Search Object - done
+* Parse Result for Output -done
 
 Frontend:
 
