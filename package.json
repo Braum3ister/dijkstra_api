@@ -7,7 +7,7 @@
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
     "build": "tsc -p .",
-    "test": "mocha --require ts-node/register --watch-extensions ts 'test/**/*.ts'"
+    "test": "mocha --require ts-node/register --watch-extensions ts 'src/test/**/*.ts'"
   },
   "dependencies": {
     "@tyriar/fibonacci-heap": "^2.0.9",
@@ -31,6 +31,5 @@
     "dotenv": "^16.0.0"
   },
   "keywords": [],
-  "author": "Braum3ister",
-  "license": "ISC"
+  "author": "Braum3ister"
 }
