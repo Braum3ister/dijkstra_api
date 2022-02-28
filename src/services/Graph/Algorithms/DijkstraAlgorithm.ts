@@ -10,7 +10,7 @@ export class DijkstraAlgorithm implements Pathfinding {
         let fibHeap:FibonacciHeap<number, Vertex> = new FibonacciHeap()
         let fibHeapMap: Map<Vertex, INode<number, Vertex>> = new Map()
         //ParentMap to find shortestPath
-        let parentMap: Map<Vertex, Vertex> = new Map();
+        let parentMap: Map<string, string> = new Map();
         let distanceMap: Map<string, number> = new Map();
 
         let startNode = fibHeap.insert(0, startVertex)
@@ -29,7 +29,7 @@ export class DijkstraAlgorithm implements Pathfinding {
                 let possibleNewWeight = currentWeight + neighbour.weight
                 if (weight == undefined || weight > possibleNewWeight) {
                     distanceMap.set(neighbour.endVertex.toIdString(), possibleNewWeight);
-                    parentMap.set(neighbour.endVertex, currentVertex)
+                    parentMap.set(neighbour.endVertex.toIdString(), currentVertex.toIdString())
                     /*
                      * Update heap or insert Heap
                      */

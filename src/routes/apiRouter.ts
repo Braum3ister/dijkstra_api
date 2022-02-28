@@ -5,4 +5,5 @@ const apiRouter: Router = Router()
 
 apiRouter.use("/dijkstra", dijkstraRoute)
 
-module.exports = apiRouter
+
+export default apiRouter

@@ -1,16 +1,16 @@
 import express from "express"
 import "dotenv/config"
 import logger from "./utils/logger"
-const cors = require("cors")
+import cors from "cors"
+import apiRouter from "./routes/Api"
 
 const app = express();
-const apiRoute = require("./routes/Api")
 
-app.use(cors())
+app.use(cors)
 
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
-app.use("/api", apiRoute)
+app.use("/api", apiRouter)
 
 const PORT = process.env.PORT
 
