@@ -26,7 +26,7 @@ class DijkstraAlgorithm {
                 let possibleNewWeight = currentWeight + neighbour.weight;
                 if (weight == undefined || weight > possibleNewWeight) {
                     distanceMap.set(neighbour.endVertex.toIdString(), possibleNewWeight);
-                    parentMap.set(neighbour.endVertex, currentVertex);
+                    parentMap.set(neighbour.endVertex.toIdString(), currentVertex.toIdString());
                     /*
                      * Update heap or insert Heap
                      */

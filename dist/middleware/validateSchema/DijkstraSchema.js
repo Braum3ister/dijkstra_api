@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.dijkstraSchema2D = void 0;
+exports.pathfindingScheme2D = void 0;
 const express_validator_1 = require("express-validator");
-const dijkstraSchema2D = [
+const pathfindingScheme2D = [
     (0, express_validator_1.body)("height")
         .exists({
         checkFalsy: true
@@ -48,4 +48,4 @@ const dijkstraSchema2D = [
         .toArray()
         .withMessage("Not valid Syntax for walls")
 ];
-exports.dijkstraSchema2D = dijkstraSchema2D;
+exports.pathfindingScheme2D = pathfindingScheme2D;

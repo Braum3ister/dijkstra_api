@@ -1,7 +1,7 @@
 import {body} from "express-validator"
 
 
-const dijkstraSchema2D = [
+const pathfindingScheme2D = [
     body("height")
         .exists({
             checkFalsy: true
@@ -54,4 +54,4 @@ const dijkstraSchema2D = [
 
 ];
 
-export {dijkstraSchema2D}
+export {pathfindingScheme2D}

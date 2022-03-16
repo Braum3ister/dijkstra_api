@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.validateRequestDijkstra = void 0;
+exports.validateRequestPathfinding = void 0;
 const express_validator_1 = require("express-validator");
-function validateRequestDijkstra(req, res, next) {
+function validateRequestPathfinding(req, res, next) {
     const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({
@@ -11,4 +11,4 @@ function validateRequestDijkstra(req, res, next) {
     }
     next();
 }
-exports.validateRequestDijkstra = validateRequestDijkstra;
+exports.validateRequestPathfinding = validateRequestPathfinding;
