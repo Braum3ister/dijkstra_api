@@ -55,7 +55,6 @@ export function convertToWeightedGraph(height: number, width: number, blockedPos
                 weightedGraph.addEdge(currentVertex, endVertex, 1)
             })
             //Add all valid edges to weighted Graph
-
         }
     }
     return weightedGraph;

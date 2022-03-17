@@ -1,8 +1,9 @@
 import {Request, Response} from "express"
-import {convertToWeightedGraph} from "../services/Graph/Graph";
-import {Position} from "../services/utils/Postion";
+
+
 import {DijkstraAlgorithm} from "../services/Graph/Algorithms/DijkstraAlgorithm";
-import {Vertex} from "../services/Graph/GraphAddons";
+import {makeWeightedGraph} from "./helpers/parser";
+import {startPathfinding} from "./pathfinding";
 
 /**
  * Verifies the input and sends a bad request if invalid, if not it
@@ -11,25 +12,9 @@ import {Vertex} from "../services/Graph/GraphAddons";
  * @param res
  */
 export function startDijkstra(req: Request, res: Response): void {
-    let height: number = req.body.height
-    let width: number = req.body.width
     let startPoint = req.body.startPoint
     let endPoint = req.body.endPoint
-    let walls = req.body.walls
-    let weightedGraph = convertToWeightedGraph(height, width, convertWalls(walls))
-    let output = weightedGraph.findPath(new DijkstraAlgorithm(), new Vertex(convertArrayToPos(startPoint).toIdString()),
-        new Vertex(convertArrayToPos(endPoint).toIdString()));
-    res.send(JSON.stringify(output))
+    let weightedGraph = makeWeightedGraph(req)
+    res.send(JSON.stringify(startPathfinding(weightedGraph, startPoint, endPoint, new DijkstraAlgorithm())))
 }
 
-let convertWalls = (walls: number[][]) => {
-    let posOutputAsString: Set<string> = new Set()
-    walls.forEach( (pos) => {
-        posOutputAsString.add(convertArrayToPos(pos).toIdString())
-    })
-    return posOutputAsString;
-}
-
-let convertArrayToPos = (posAsArray: number[]): Position => {
-    return new Position(posAsArray[0], posAsArray[1])
-}

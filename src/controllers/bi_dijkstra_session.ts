@@ -1,5 +1,7 @@
 import {Request, Response} from "express"
-import {AStarAlgorithm} from "../services/Graph/Algorithms/AStarAlgorithm";
+
+
+import {DijkstraAlgorithm} from "../services/Graph/Algorithms/DijkstraAlgorithm";
 import {makeWeightedGraph} from "./helpers/parser";
 import {startPathfinding} from "./pathfinding";
 
@@ -9,11 +11,9 @@ import {startPathfinding} from "./pathfinding";
  * @param req
  * @param res
  */
-export function startAStar(req: Request, res: Response): void {
+export function startBiDijkstra(req: Request, res: Response): void {
     let startPoint = req.body.startPoint
     let endPoint = req.body.endPoint
     let weightedGraph = makeWeightedGraph(req)
-    res.send(JSON.stringify(startPathfinding(weightedGraph, startPoint, endPoint, new AStarAlgorithm())))
+    res.send(JSON.stringify(startPathfinding(weightedGraph, startPoint, endPoint, new DijkstraAlgorithm())))
 }
-
-
