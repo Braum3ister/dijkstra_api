@@ -1,22 +1,26 @@
 import {Destination, Vertex} from "./GraphAddons";
-import {Pathfinding} from "./Algorithms/Pathfinding";
+import {Pathfinding} from "./Algorithms/unidirecional/Pathfinding";
 import {Position} from "../utils/Postion";
+import {findBiDijkstraPath} from "./Algorithms/bidirectional/BiDijkstra";
 
 
 export class WeightedDirectedGraph {
     protected readonly graphMap: Map<string, Set<Destination>>;
+    protected readonly reverseGraphMap: Map<string, Set<Destination>>
 
     constructor() {
         this.graphMap = new Map();
+        this.reverseGraphMap = new Map();
     }
 
     addVertex(vertex: Vertex): void {
         this.graphMap.set(vertex.toIdString(), new Set())
+        this.reverseGraphMap.set(vertex.toIdString(), new Set())
     }
 
     addEdge(startVertex: Vertex, endVertex: Vertex, weight: number): void {
         //Check if start and endPoints exist
-        //IMPORTANT EQUALS METHOD NOT BE WORKING
+        //IMPORTANT EQUALS METHOD DOES NOT SEEM TO BE WORKING
         let possibleStartPoint = this.graphMap.get(startVertex.toIdString())
         let possibleEndPoint = this.graphMap.get(endVertex.toIdString())
         if (possibleStartPoint === undefined) {
@@ -28,10 +32,14 @@ export class WeightedDirectedGraph {
         }
 
         this.graphMap.get(startVertex.toIdString())!.add(new Destination(endVertex, weight));
+        this.reverseGraphMap.get(endVertex.toIdString())!.add(new Destination(startVertex, weight))
     }
-
     findPath(algorithm: Pathfinding, startVertex: Vertex, endVertex: Vertex) {
         return (algorithm.findPath(this.graphMap, startVertex, endVertex))
+    }
+
+    findBiDijkstra(startVertex: Vertex, endVertex: Vertex) {
+        return findBiDijkstraPath(this.graphMap, this.reverseGraphMap,startVertex, endVertex)
     }
 }
 

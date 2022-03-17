@@ -1,4 +1,4 @@
-import {Destination, Vertex} from "../GraphAddons";
+import {Destination, Vertex} from "../../GraphAddons";
 
 
 export class ResultOfPathfinding {

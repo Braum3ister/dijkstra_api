@@ -1,7 +1,7 @@
 import {expect} from "chai"
 import {convertToWeightedGraph, WeightedDirectedGraph} from "../../services/Graph/Graph";
 import {Vertex} from "../../services/Graph/GraphAddons";
-import {DijkstraAlgorithm} from "../../services/Graph/Algorithms/DijkstraAlgorithm";
+import {DijkstraAlgorithm} from "../../services/Graph/Algorithms/unidirecional/DijkstraAlgorithm";
 
 
 describe("Dijkstra Test", () => {
@@ -45,16 +45,27 @@ describe("Dijkstra Test", () => {
         expect(weightedGraph.findPath(new DijkstraAlgorithm(),startVertex, endVertex).finalDistance).to.equal(10)
     })
 
+    it("BiDijkstraGraph BasicGraph", () => {
+        expect(weightedGraph.findBiDijkstra(startVertex, endVertex).distance).to.equal(10)
+    })
+
     it("Advanced Graph Dijkstra", () => {
         let advancedGraph = setUpAdvancedGraph()
         expect(advancedGraph.findPath(new DijkstraAlgorithm(), A, F).finalDistance).to.equal(6)
+    })
+
+    it("Advance Graph BiDijkstra", () => {
+        let advancedGraph = setUpAdvancedGraph()
+        let output = advancedGraph.findBiDijkstra(A, F)
+        expect(output.distance).to.equal(6)
     })
 
     it("Crate matrix Graph Dijkstra", () => {
         let newWeightedGraph = convertToWeightedGraph(10, 10, new Set())
         let startVertex = new Vertex("0,0")
         let endVertex = new Vertex("0,9")
-        expect(newWeightedGraph.findPath(new DijkstraAlgorithm(), startVertex, endVertex).finalDistance).to.equal(9)
+        expect(newWeightedGraph.findPath(new DijkstraAlgorithm(), startVertex, endVertex).finalDistance)
+            .to.equal(9)
     })
 
 })

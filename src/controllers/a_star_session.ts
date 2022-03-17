@@ -1,5 +1,5 @@
 import {Request, Response} from "express"
-import {AStarAlgorithm} from "../services/Graph/Algorithms/AStarAlgorithm";
+import {AStarAlgorithm} from "../services/Graph/Algorithms/unidirecional/AStarAlgorithm";
 import {makeWeightedGraph} from "./helpers/parser";
 import {startPathfinding} from "./pathfinding";
 

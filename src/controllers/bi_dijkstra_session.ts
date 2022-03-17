@@ -1,9 +1,9 @@
 import {Request, Response} from "express"
 
 
-import {DijkstraAlgorithm} from "../services/Graph/Algorithms/DijkstraAlgorithm";
 import {makeWeightedGraph} from "./helpers/parser";
-import {startPathfinding} from "./pathfinding";
+import {startBiPathfinding} from "./bi_pathfinding";
+
 
 /**
  * Verifies the input and sends a bad request if invalid, if not it
@@ -12,8 +12,8 @@ import {startPathfinding} from "./pathfinding";
  * @param res
  */
 export function startBiDijkstra(req: Request, res: Response): void {
-    let startPoint = req.body.startPoint
-    let endPoint = req.body.endPoint
+    let startPoint: number[] = req.body.startPoint
+    let endPoint: number[] = req.body.endPoint
     let weightedGraph = makeWeightedGraph(req)
-    res.send(JSON.stringify(startPathfinding(weightedGraph, startPoint, endPoint, new DijkstraAlgorithm())))
+    res.send(JSON.stringify(startBiPathfinding(weightedGraph, startPoint, endPoint)))
 }

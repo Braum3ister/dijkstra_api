@@ -1,6 +1,6 @@
 import {convertArrayToPos} from "./helpers/parser";
 import {Vertex} from "../services/Graph/GraphAddons";
-import {Pathfinding} from "../services/Graph/Algorithms/Pathfinding";
+import {Pathfinding} from "../services/Graph/Algorithms/unidirecional/Pathfinding";
 import {WeightedDirectedGraph} from "../services/Graph/Graph";
 
 

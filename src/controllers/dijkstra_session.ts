@@ -1,7 +1,7 @@
 import {Request, Response} from "express"
 
 
-import {DijkstraAlgorithm} from "../services/Graph/Algorithms/DijkstraAlgorithm";
+import {DijkstraAlgorithm} from "../services/Graph/Algorithms/unidirecional/DijkstraAlgorithm";
 import {makeWeightedGraph} from "./helpers/parser";
 import {startPathfinding} from "./pathfinding";
 
