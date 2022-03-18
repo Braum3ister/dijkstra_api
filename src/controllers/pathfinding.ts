@@ -5,7 +5,7 @@ import {WeightedDirectedGraph} from "../services/Graph/Graph";
 
 
 export function startPathfinding(weightedGraph: WeightedDirectedGraph, startPoint: number[], endPoint: number[], algorithm: Pathfinding) {
-    return JSON.stringify(weightedGraph.findPath(algorithm, new Vertex(convertArrayToPos(startPoint).toIdString()),
-        new Vertex(convertArrayToPos(endPoint).toIdString())));
+    return weightedGraph.findPath(algorithm, new Vertex(convertArrayToPos(startPoint).toIdString()),
+        new Vertex(convertArrayToPos(endPoint).toIdString()));
 
 }

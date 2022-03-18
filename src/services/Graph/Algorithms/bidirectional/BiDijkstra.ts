@@ -1,61 +1,9 @@
 import {Destination, Vertex} from "../../GraphAddons";
 import {FibonacciHeap, INode} from "@tyriar/fibonacci-heap";
+import {ResultOfBiPathfinding} from "./BiPathfinding";
 
 
-export class ResultOfBiPathfinding {
-    private readonly forwardDistanceMap: Map<string, number>
-    private readonly backwardDistanceMap: Map<string, number>
-    private readonly startVertex: Vertex
-    private readonly endVertex: Vertex
-    private readonly _distance: number
-    private readonly parentMap: Map<string, null>
-    private readonly halfWayPoint: Vertex
 
-
-    constructor(parentMapForward: Map<string, string>, parentMapBackward: Map<string, string>, forwardDistanceMap: Map<string, number>, backwardDistanceMap: Map<string, number>, startVertex: Vertex, endVertex: Vertex, distance: number, halfWayPoint: Vertex) {
-        this.forwardDistanceMap = forwardDistanceMap
-        this.backwardDistanceMap = backwardDistanceMap
-        this.startVertex = startVertex
-        this.endVertex = endVertex
-        this._distance = distance
-        this.halfWayPoint = halfWayPoint
-        this.parentMap = this.parseParentMap(parentMapForward, parentMapBackward)
-
-    }
-
-    parseParentMap(parentMapForward: Map<string, string>, parentMapBackward: Map<string, string>): Map<string, null> {
-        let output: Map<string, null> = new Map()
-        let currentForward: string | undefined = this.halfWayPoint.toIdString();
-        while (currentForward != undefined) {
-            output.set(currentForward, null)
-            currentForward = parentMapForward.get(currentForward)
-        }
-
-        let currentBackward: string | undefined = this.halfWayPoint.toIdString()
-        while (currentBackward != undefined) {
-            output.set(currentBackward, null)
-            currentBackward = parentMapBackward.get(currentBackward)
-        }
-        return output;
-    }
-
-    get distance(): number {
-        return this._distance;
-    }
-
-    toJSON() {
-
-        return {
-            start: this.startVertex,
-            end: this.endVertex,
-            distance: this.distance,
-            forwardDistanceMap: Object.fromEntries(this.forwardDistanceMap),
-            backwardDistanceMap: Object.fromEntries(this.backwardDistanceMap),
-            path: Object.fromEntries(this.parentMap)
-        }
-
-    }
-}
 
 export const findBiDijkstraPath = (graphMap: Map<string, Set<Destination>>, reversedGraphMap: Map<string, Set<Destination>>, startVertex: Vertex, endVertex: Vertex) => {
     const forwardQueue: FibonacciHeap<number, Vertex> = new FibonacciHeap()
@@ -101,78 +49,35 @@ export const findBiDijkstraPath = (graphMap: Map<string, Set<Destination>>, reve
          * Add Adjacent Vertices to Forward Search
          */
 
-        let possibleNeighboursForward: Set<Destination> = graphMap.get(currentForward.toIdString())!
-        possibleNeighboursForward.forEach(neighbourOfForward => {
-            let weight = forwardDistanceMap.get(neighbourOfForward.endVertex.toIdString())
-            let currentWeight = forwardDistanceMap.get(currentForward.toIdString())!
-            let possibleNewWeight = currentWeight + neighbourOfForward.weight
-            if (weight == undefined || weight > possibleNewWeight) {
-                forwardDistanceMap.set(neighbourOfForward.endVertex.toIdString(), possibleNewWeight);
-                parentMapForward.set(neighbourOfForward.endVertex.toIdString(), currentForward.toIdString())
-                /*
-                 * Update heap or insert Heap
-                 */
-                if (queueMapForward.get(neighbourOfForward.endVertex) == undefined) {
-                    let node = forwardQueue.insert(possibleNewWeight, neighbourOfForward.endVertex)
-                    queueMapForward.set(neighbourOfForward.endVertex, node)
-                } else {
-                    forwardQueue.decreaseKey(queueMapForward.get(neighbourOfForward.endVertex)!, possibleNewWeight)
-                }
+        let outputForward = relaxNeighbours(optimalHafWayPoint,
+            optimalDistance,
+            graphMap,
+            forwardDistanceMap,
+            currentForward,
+            parentMapForward,
+            queueMapForward,
+            forwardQueue,
+            backwardDistanceMap)
 
-            }
-            /**
-             * Update optimal distance
-             */
-
-            let remainingDistance = backwardDistanceMap.get(neighbourOfForward.endVertex.toIdString())
-
-            if (remainingDistance != undefined && (possibleNewWeight + remainingDistance) < optimalDistance) {
-                optimalDistance = possibleNewWeight + remainingDistance
-                optimalHafWayPoint = neighbourOfForward.endVertex
-            }
-
-        })
-
-
+        optimalDistance = outputForward.optimalDistance
+        optimalHafWayPoint = outputForward.optimalHafWayPoint
 
         /**
          * Add adjacent vertices to Backward Search
          */
 
+        let outputBackward = relaxNeighbours(optimalHafWayPoint,
+            optimalDistance,
+            reversedGraphMap,
+            backwardDistanceMap,
+            currentBackward,
+            parentMapBackward,
+            queueMapBackward,
+            backwardQueue,
+            forwardDistanceMap)
 
-
-        let possibleNeighboursBackward: Set<Destination> = reversedGraphMap.get(currentBackward.toIdString())!
-        possibleNeighboursBackward.forEach(neighbourOfBackward => {
-            let weight = backwardDistanceMap.get(neighbourOfBackward.endVertex.toIdString())
-            let currentWeight = backwardDistanceMap.get(currentBackward.toIdString())!
-            let possibleNewWeight = currentWeight + neighbourOfBackward.weight
-            if (weight == undefined || weight > possibleNewWeight) {
-                backwardDistanceMap.set(neighbourOfBackward.endVertex.toIdString(), possibleNewWeight);
-                parentMapBackward.set(neighbourOfBackward.endVertex.toIdString(), currentBackward.toIdString())
-                /*
-                 * Update heap or insert Heap
-                 */
-                if (queueMapBackward.get(neighbourOfBackward.endVertex) == undefined) {
-                    let node = backwardQueue.insert(possibleNewWeight, neighbourOfBackward.endVertex)
-                    queueMapBackward.set(neighbourOfBackward.endVertex, node)
-                } else {
-                    backwardQueue.decreaseKey(queueMapBackward.get(neighbourOfBackward.endVertex)!, possibleNewWeight)
-                }
-
-            }
-
-            /**
-             * Update optimal distance
-             */
-
-            let remainingDistance = forwardDistanceMap.get(neighbourOfBackward.endVertex.toIdString())
-            if (remainingDistance != undefined
-                && (possibleNewWeight + remainingDistance) < optimalDistance) {
-                optimalDistance = possibleNewWeight + remainingDistance
-                optimalHafWayPoint = neighbourOfBackward.endVertex
-            }
-
-        })
+        optimalHafWayPoint = outputBackward.optimalHafWayPoint
+        optimalDistance = outputBackward.optimalDistance
 
     }
 
@@ -189,6 +94,49 @@ export const findBiDijkstraPath = (graphMap: Map<string, Set<Destination>>, reve
         optimalDistance,
         optimalHafWayPoint)
 
+}
+
+
+
+const relaxNeighbours = (hWPoint: Vertex, optDistance: number, graphMap: Map<string, Set<Destination>>, primaryDistanceMap: Map<string, number>, currentPrimary: Vertex, parentMapPrimary: Map<string, string>, queueMapPrimary: Map<Vertex, INode<number, Vertex>>, primaryQueue:FibonacciHeap<number, Vertex>, secondaryDistanceMap: Map<string, number>) => {
+    let optimalDistance = optDistance
+    let optimalHafWayPoint = hWPoint
+    let possibleNeighboursForward: Set<Destination> = graphMap.get(currentPrimary.toIdString())!
+    possibleNeighboursForward.forEach(neighbourOfForward => {
+        let weight = primaryDistanceMap.get(neighbourOfForward.endVertex.toIdString())
+        let currentWeight = primaryDistanceMap.get(currentPrimary.toIdString())!
+        let possibleNewWeight = currentWeight + neighbourOfForward.weight
+        if (weight == undefined || weight > possibleNewWeight) {
+            primaryDistanceMap.set(neighbourOfForward.endVertex.toIdString(), possibleNewWeight);
+            parentMapPrimary.set(neighbourOfForward.endVertex.toIdString(), currentPrimary.toIdString())
+            /*
+             * Update heap or insert Heap
+             */
+            if (queueMapPrimary.get(neighbourOfForward.endVertex) == undefined) {
+                let node = primaryQueue.insert(possibleNewWeight, neighbourOfForward.endVertex)
+                queueMapPrimary.set(neighbourOfForward.endVertex, node)
+            } else {
+                primaryQueue.decreaseKey(queueMapPrimary.get(neighbourOfForward.endVertex)!, possibleNewWeight)
+            }
+
+        }
+        /**
+         * Update optimal distance
+         */
+
+        let remainingDistance = secondaryDistanceMap.get(neighbourOfForward.endVertex.toIdString())
+
+        if (remainingDistance != undefined && (possibleNewWeight + remainingDistance) < optimalDistance) {
+            optimalDistance = possibleNewWeight + remainingDistance
+            optimalHafWayPoint = neighbourOfForward.endVertex
+        }
+
+    })
+
+    return {
+        optimalDistance,
+        optimalHafWayPoint
+    }
 }
 
 

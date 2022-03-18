@@ -35,8 +35,6 @@ export class ResultOfPathfinding {
     toJSON() {
 
         return {
-            start: this.startVertex,
-            end: this.endVertex,
             distance: this.finalDistance,
             distanceMap: Object.fromEntries(this.distanceMap),
             path: Object.fromEntries(this.parentMap)

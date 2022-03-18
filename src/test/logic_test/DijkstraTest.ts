@@ -68,4 +68,34 @@ describe("Dijkstra Test", () => {
             .to.equal(9)
     })
 
+    it("Advanced BiDijstra Test", () => {
+        let newWeightedGraph = convertToWeightedGraph(20, 20, new Set())
+        let startVertex = new Vertex("1,2")
+        let endVertex = new Vertex("15,8")
+        let output = newWeightedGraph.findBiDijkstra(startVertex, endVertex)
+        expect(output.distance).to.equal(20)
+        console.log(findBiggestElement(output.backwardDistanceMap))
+        console.log(findBiggestElement(output.forwardDistanceMap))
+    })
+
+    it("Really Big Test", () => {
+        let weightedGraph = convertToWeightedGraph(100, 100, new Set())
+        let startVertex = new Vertex("12,42")
+        let endVertex = new Vertex("88,88")
+        let output = weightedGraph.findBiDijkstra(startVertex, endVertex)
+        console.log(findBiggestElement(output.backwardDistanceMap))
+        console.log(findBiggestElement(output.forwardDistanceMap))
+        expect(output.distance).to.equal(122)
+    })
+
 })
+
+const findBiggestElement = (map: Map<string, number>) => {
+    let biggestElement = 0
+    for (let value of map.values()) {
+        if (value > biggestElement) {
+            biggestElement = value
+        }
+    }
+    return biggestElement
+}

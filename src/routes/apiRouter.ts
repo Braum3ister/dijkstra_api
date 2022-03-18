@@ -7,7 +7,7 @@ const apiRouter: Router = Router()
 
 apiRouter.use("/dijkstra", dijkstraRoute)
 apiRouter.use("/astar", aStarRouter)
-apiRouter.use("bidijkstra", biDijkstraRouter)
+apiRouter.use("/bidijkstra", biDijkstraRouter)
 
 
 export default apiRouter
