@@ -1,4 +1,5 @@
-import {Destination, Vertex} from "../../GraphAddons";
+import {Destination, Vertex} from "../../graph-addons.model";
+import {FibonacciHeap, INode} from "@tyriar/fibonacci-heap";
 
 export class ResultOfBiPathfinding {
     private readonly _forwardDistanceMap: Map<string, number>
@@ -85,4 +86,19 @@ export interface BiPathfindingFunction {
     biPathfinding: (graph: Map<string, Set<Destination>>, reverseGraph: Map<string, Set<Destination>>,
                     startVertex: Vertex,
                     endVertex: Vertex) => ResultOfBiPathfinding
+}
+
+export interface BiAlgorithmStatus {
+    forwardQueue: FibonacciHeap<number, Vertex>
+    backwardQueue: FibonacciHeap<number, Vertex>
+
+    forwardDistanceMap: Map<string, number>
+    backwardDistanceMap: Map<string, number>
+
+    parentMapForward: Map<string, string>
+    parentMapBackward: Map<string, string>
+
+    queueMapForward: Map<Vertex, INode<number, Vertex>>
+    queueMapBackward: Map<Vertex, INode<number, Vertex>>
+
 }

@@ -2,7 +2,7 @@ import express from "express"
 import "dotenv/config"
 import logger from "./utils/logger"
 import cors from "cors"
-import apiRouter from "./routes/apiRouter"
+import apiRouter from "./routes/api-router"
 
 const app = express();
 

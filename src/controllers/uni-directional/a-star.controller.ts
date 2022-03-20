@@ -1,7 +1,7 @@
 import {Request, Response} from "express"
-import {AStarAlgorithm} from "../services/Graph/Algorithms/unidirecional/AStarAlgorithm";
-import {makeWeightedGraph} from "./helpers/parser";
-import {startPathfinding} from "./pathfinding";
+import {AStarAlgorithm} from "../../services/Graph/Algorithms/uni-direcional/AStarAlgorithm";
+import {makeWeightedGraph} from "../helpers/parser";
+import {startPathfinding} from "./pathfinding.controller";
 
 /**
  * Verifies the input and sends a bad request if invalid, if not it

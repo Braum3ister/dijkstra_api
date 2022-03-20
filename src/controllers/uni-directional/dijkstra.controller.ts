@@ -1,9 +1,9 @@
 import {Request, Response} from "express"
 
 
-import {DijkstraAlgorithm} from "../services/Graph/Algorithms/unidirecional/DijkstraAlgorithm";
-import {makeWeightedGraph} from "./helpers/parser";
-import {startPathfinding} from "./pathfinding";
+import {DijkstraAlgorithm} from "../../services/Graph/Algorithms/uni-direcional/DijkstraAlgorithm";
+import {makeWeightedGraph} from "../helpers/parser";
+import {startPathfinding} from "./pathfinding.controller";
 
 /**
  * Verifies the input and sends a bad request if invalid, if not it

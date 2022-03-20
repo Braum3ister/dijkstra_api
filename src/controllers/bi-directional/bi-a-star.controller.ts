@@ -1,9 +1,9 @@
 import {Request, Response} from "express"
 
 
-import {makeWeightedGraph} from "./helpers/parser";
-import {startBiPathfinding} from "./bi_pathfinding";
-import {findBiAStar} from "../services/Graph/Algorithms/bidirectional/BiAStar";
+import {makeWeightedGraph} from "../helpers/parser";
+import {startBiPathfinding} from "./bi-pathfiding.controller";
+import {findBiAStar} from "../../services/Graph/Algorithms/bi-directional/BiAStar";
 
 
 

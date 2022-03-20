@@ -1,8 +1,9 @@
 import {Router, Request, Response} from "express"
-import {startAStar} from "../../controllers/a_star_session"
-import {pathfindingScheme2D} from "../../middleware/validateSchema/DijkstraSchema";
-import {validateRequestPathfinding} from "../../middleware/ValidateRequest";
+
 import {StatusCodes} from "http-status-codes"
+import {pathfindingScheme2D} from "../../middleware/validate-schema/dijkstra-schema";
+import {startAStar} from "../../controllers/uni-directional/a-star.controller";
+import {validateRequestPathfinding} from "../../middleware/validata-request.middleware";
 
 export const router: Router = Router()
 

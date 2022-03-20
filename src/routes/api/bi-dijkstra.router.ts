@@ -1,8 +1,9 @@
 import {Router, Request, Response} from "express"
-import {startBiDijkstra} from "../../controllers/bi_dijkstra_session"
-import {pathfindingScheme2D} from "../../middleware/validateSchema/DijkstraSchema";
-import {validateRequestPathfinding} from "../../middleware/ValidateRequest";
+
 import {StatusCodes} from "http-status-codes"
+import {pathfindingScheme2D} from "../../middleware/validate-schema/dijkstra-schema";
+import {startBiDijkstra} from "../../controllers/bi-directional/bi-dijkstra.controller";
+import {validateRequestPathfinding} from "../../middleware/validata-request.middleware";
 
 export const router: Router = Router()
 

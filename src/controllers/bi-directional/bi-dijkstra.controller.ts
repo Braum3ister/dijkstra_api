@@ -1,9 +1,9 @@
 import {Request, Response} from "express"
 
 
-import {makeWeightedGraph} from "./helpers/parser";
-import {startBiPathfinding} from "./bi_pathfinding";
-import {findBiDijkstraPath} from "../services/Graph/Algorithms/bidirectional/BiDijkstra";
+import {makeWeightedGraph} from "../helpers/parser";
+import {startBiPathfinding} from "./bi-pathfiding.controller";
+import {findBiDijkstraPath} from "../../services/Graph/Algorithms/bi-directional/BiDijkstra";
 
 
 
@@ -15,4 +15,3 @@ export function startBiDijkstra(req: Request, res: Response): void {
         biPathfinding: findBiDijkstraPath
     })))
 }
- 

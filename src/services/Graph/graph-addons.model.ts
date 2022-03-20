@@ -1,6 +1,6 @@
-import {Equality} from "../utils/GeneralSet";
 
-export class Vertex implements Equality {
+
+export class Vertex {
     private readonly name: string;
     constructor(name: string) {
         this.name = name;

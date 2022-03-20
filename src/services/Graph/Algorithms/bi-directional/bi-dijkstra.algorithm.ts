@@ -1,14 +1,11 @@
-import {Destination, Vertex} from "../../GraphAddons";
+import {Destination, Vertex} from "../../graph-addons.model";
 import {FibonacciHeap, INode} from "@tyriar/fibonacci-heap";
-import {ResultOfBiPathfinding} from "./BiPathfinding";
+import {ResultOfBiPathfinding} from "./bi-pathfiding.algorithm";
 
 
 
 
-export const findBiAStar = (graphMap: Map<string, Set<Destination>>,
-                                   reversedGraphMap: Map<string, Set<Destination>>,
-                                   startVertex: Vertex,
-                                   endVertex: Vertex) => {
+export const findBiDijkstraPath = (graphMap: Map<string, Set<Destination>>, reversedGraphMap: Map<string, Set<Destination>>, startVertex: Vertex, endVertex: Vertex) => {
     const forwardQueue: FibonacciHeap<number, Vertex> = new FibonacciHeap()
     const backwardQueue: FibonacciHeap<number, Vertex> = new FibonacciHeap()
 
@@ -49,11 +46,10 @@ export const findBiAStar = (graphMap: Map<string, Set<Destination>>,
             }
         }
 
+        let output
 
-
-
-        let output1 = relaxNeighboursAStar(optimalHafWayPoint,
-                endVertex,
+        if (forwardQueue.findMinimum()!.key <= backwardQueue.findMinimum()!.key) {
+            output = relaxNeighbours(optimalHafWayPoint,
                 optimalDistance,
                 graphMap,
                 forwardDistanceMap,
@@ -63,11 +59,9 @@ export const findBiAStar = (graphMap: Map<string, Set<Destination>>,
                 forwardQueue,
                 backwardDistanceMap)
 
-        optimalDistance = output1.optimalDistance
-        optimalHafWayPoint = output1.optimalHafWayPoint
+        } else {
 
-        let output2 = relaxNeighboursAStar(optimalHafWayPoint,
-                startVertex,
+            output = relaxNeighbours(optimalHafWayPoint,
                 optimalDistance,
                 reversedGraphMap,
                 backwardDistanceMap,
@@ -77,8 +71,13 @@ export const findBiAStar = (graphMap: Map<string, Set<Destination>>,
                 backwardQueue,
                 forwardDistanceMap)
 
-        optimalDistance = output2.optimalDistance
-        optimalHafWayPoint = output2.optimalHafWayPoint
+        }
+
+
+        optimalDistance = output.optimalDistance
+        optimalHafWayPoint = output.optimalHafWayPoint
+
+
 
     }
 
@@ -99,8 +98,7 @@ export const findBiAStar = (graphMap: Map<string, Set<Destination>>,
 
 
 
-const relaxNeighboursAStar = (hWPoint: Vertex,
-                         endVertex: Vertex,
+const relaxNeighbours = (hWPoint: Vertex,
                          optDistance: number,
                          graphMap: Map<string, Set<Destination>>,
                          primaryDistanceMap: Map<string, number>,
@@ -122,13 +120,11 @@ const relaxNeighboursAStar = (hWPoint: Vertex,
             /*
              * Update heap or insert Heap
              */
-            let guessedRemainingDistance = findDistance(neighbourOfPrimary.endVertex.toIdString(), endVertex.toIdString())
             if (queueMapPrimary.get(neighbourOfPrimary.endVertex) == undefined) {
-                let node = primaryQueue.insert(possibleNewWeight + guessedRemainingDistance, neighbourOfPrimary.endVertex)
+                let node = primaryQueue.insert(possibleNewWeight, neighbourOfPrimary.endVertex)
                 queueMapPrimary.set(neighbourOfPrimary.endVertex, node)
             } else {
-                primaryQueue.decreaseKey(queueMapPrimary.get(neighbourOfPrimary.endVertex)!,
-                    possibleNewWeight + guessedRemainingDistance)
+                primaryQueue.decreaseKey(queueMapPrimary.get(neighbourOfPrimary.endVertex)!, possibleNewWeight)
             }
 
         }
@@ -151,18 +147,7 @@ const relaxNeighboursAStar = (hWPoint: Vertex,
     }
 }
 
-export const findDistance = (currentVertex: string, endVertex: string) => {
-    let coordinateCurrent = convertToArray(currentVertex)
-    let coordinateEnd = convertToArray(endVertex)
-    return Math.abs(coordinateCurrent[0] - coordinateEnd[0]) + Math.abs(coordinateCurrent[1] - coordinateEnd[1])
 
 
-}
 
-export const convertToArray = (coordinateAsString: string): number[] => {
-    let output = coordinateAsString.split(",")
-    let x  = parseInt(output[0])
-    let y = parseInt(output[1])
 
-    return [x, y]
-}

@@ -1,6 +1,7 @@
-import {Pathfinding, ResultOfPathfinding} from "./Pathfinding";
-import {Destination, Vertex} from "../../GraphAddons";
+
+import {Destination, Vertex} from "../../graph-addons.model";
 import {FibonacciHeap, INode} from "@tyriar/fibonacci-heap"
+import {Pathfinding, ResultOfPathfinding} from "./pathfiding.algorithm";
 
 
 export class DijkstraAlgorithm implements Pathfinding {

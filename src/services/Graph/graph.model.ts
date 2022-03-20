@@ -1,7 +1,9 @@
-import {Destination, Vertex} from "./GraphAddons";
-import {Pathfinding} from "./Algorithms/unidirecional/Pathfinding";
-import {Position} from "../utils/Postion";
-import {BiPathfindingFunction} from "./Algorithms/bidirectional/BiPathfinding";
+import {Destination, Vertex} from "./graph-addons.model";
+
+import {Position} from "../utils/position.utils";
+import {BiPathfindingFunction} from "./Algorithms/bi-directional/bi-pathfiding.algorithm";
+import {Pathfinding} from "./Algorithms/uni-direcional/pathfiding.algorithm";
+
 
 
 export class WeightedDirectedGraph {

@@ -1,8 +1,9 @@
 import {Router, Request, Response} from "express"
-import {startBiAStar} from "../../controllers/bi_a_star_sssion";
-import {pathfindingScheme2D} from "../../middleware/validateSchema/DijkstraSchema";
-import {validateRequestPathfinding} from "../../middleware/ValidateRequest";
+
 import {StatusCodes} from "http-status-codes"
+import {validateRequestPathfinding} from "../../middleware/validata-request.middleware";
+import {pathfindingScheme2D} from "../../middleware/validate-schema/dijkstra-schema";
+import {startBiAStar} from "../../controllers/bi-directional/bi-a-star.controller";
 
 export const router: Router = Router()
 

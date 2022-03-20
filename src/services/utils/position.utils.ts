@@ -1,7 +1,7 @@
-import {Equality} from "./GeneralSet";
 
 
-export class Position implements Equality {
+
+export class Position {
     x: number;
     y: number;
 

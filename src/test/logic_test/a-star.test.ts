@@ -2,7 +2,7 @@ import {expect} from "chai"
 import {convertToWeightedGraph} from "../../services/Graph/Graph";
 import {Vertex} from "../../services/Graph/GraphAddons";
 
-import {AStarAlgorithm} from "../../services/Graph/Algorithms/unidirecional/AStarAlgorithm";
+import {AStarAlgorithm} from "../../services/Graph/Algorithms/uni-direcional/AStarAlgorithm";
 
 
 describe("AStarAlgorithm Test", () => {

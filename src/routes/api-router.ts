@@ -1,8 +1,8 @@
 import {Router} from "express"
-import {router as dijkstraRoute} from "./api/dijkstra"
-import {router as aStarRouter} from "./api/astar"
-import {router as biDijkstraRouter} from "./api/bidijkstra"
-import {router as biAStarRouter} from "./api/biastar"
+import {router as dijkstraRoute} from "./api/dijkstra.router"
+import {router as aStarRouter} from "./api/a-star.router"
+import {router as biDijkstraRouter} from "./api/bi-dijkstra.router"
+import {router as biAStarRouter} from "./api/bi-a-star.router"
 
 const apiRouter: Router = Router()
 
