@@ -41,7 +41,6 @@ export class AStarAlgorithm implements Pathfinding {
                         fibHeap.decreaseKey(fibHeapMap.get(neighbour.endVertex)!, possibleNewWeight +
                             this.findDistance(neighbour.endVertex.toIdString(), endVertex.toIdString()))
                     }
-
                 }
             })
         }

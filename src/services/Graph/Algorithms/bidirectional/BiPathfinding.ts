@@ -1,4 +1,4 @@
-import {Vertex} from "../../GraphAddons";
+import {Destination, Vertex} from "../../GraphAddons";
 
 export class ResultOfBiPathfinding {
     private readonly _forwardDistanceMap: Map<string, number>
@@ -26,13 +26,6 @@ export class ResultOfBiPathfinding {
         return this._endVertex;
     }
 
-    get parentMap(): Map<string, null> {
-        return this._parentMap;
-    }
-
-    get halfWayPoint(): Vertex {
-        return this._halfWayPoint;
-    }
 
     constructor(parentMapForward: Map<string, string>,
                 parentMapBackward: Map<string, string>,
@@ -85,4 +78,11 @@ export class ResultOfBiPathfinding {
         }
 
     }
+}
+
+
+export interface BiPathfindingFunction {
+    biPathfinding: (graph: Map<string, Set<Destination>>, reverseGraph: Map<string, Set<Destination>>,
+                    startVertex: Vertex,
+                    endVertex: Vertex) => ResultOfBiPathfinding
 }

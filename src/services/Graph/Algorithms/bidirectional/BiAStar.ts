@@ -5,7 +5,10 @@ import {ResultOfBiPathfinding} from "./BiPathfinding";
 
 
 
-export const findBiDijkstraPath = (graphMap: Map<string, Set<Destination>>, reversedGraphMap: Map<string, Set<Destination>>, startVertex: Vertex, endVertex: Vertex) => {
+export const findBiAStar = (graphMap: Map<string, Set<Destination>>,
+                                   reversedGraphMap: Map<string, Set<Destination>>,
+                                   startVertex: Vertex,
+                                   endVertex: Vertex) => {
     const forwardQueue: FibonacciHeap<number, Vertex> = new FibonacciHeap()
     const backwardQueue: FibonacciHeap<number, Vertex> = new FibonacciHeap()
 
@@ -46,10 +49,11 @@ export const findBiDijkstraPath = (graphMap: Map<string, Set<Destination>>, reve
             }
         }
 
-        let output
 
-        if (forwardQueue.findMinimum()!.key <= backwardQueue.findMinimum()!.key) {
-            output = relaxNeighbours(optimalHafWayPoint,
+
+
+        let output1 = relaxNeighboursAStar(optimalHafWayPoint,
+                endVertex,
                 optimalDistance,
                 graphMap,
                 forwardDistanceMap,
@@ -59,9 +63,11 @@ export const findBiDijkstraPath = (graphMap: Map<string, Set<Destination>>, reve
                 forwardQueue,
                 backwardDistanceMap)
 
-        } else {
+        optimalDistance = output1.optimalDistance
+        optimalHafWayPoint = output1.optimalHafWayPoint
 
-            output = relaxNeighbours(optimalHafWayPoint,
+        let output2 = relaxNeighboursAStar(optimalHafWayPoint,
+                startVertex,
                 optimalDistance,
                 reversedGraphMap,
                 backwardDistanceMap,
@@ -71,13 +77,8 @@ export const findBiDijkstraPath = (graphMap: Map<string, Set<Destination>>, reve
                 backwardQueue,
                 forwardDistanceMap)
 
-        }
-
-
-        optimalDistance = output.optimalDistance
-        optimalHafWayPoint = output.optimalHafWayPoint
-
-
+        optimalDistance = output2.optimalDistance
+        optimalHafWayPoint = output2.optimalHafWayPoint
 
     }
 
@@ -98,7 +99,8 @@ export const findBiDijkstraPath = (graphMap: Map<string, Set<Destination>>, reve
 
 
 
-const relaxNeighbours = (hWPoint: Vertex,
+const relaxNeighboursAStar = (hWPoint: Vertex,
+                         endVertex: Vertex,
                          optDistance: number,
                          graphMap: Map<string, Set<Destination>>,
                          primaryDistanceMap: Map<string, number>,
@@ -120,11 +122,13 @@ const relaxNeighbours = (hWPoint: Vertex,
             /*
              * Update heap or insert Heap
              */
+            let guessedRemainingDistance = findDistance(neighbourOfPrimary.endVertex.toIdString(), endVertex.toIdString())
             if (queueMapPrimary.get(neighbourOfPrimary.endVertex) == undefined) {
-                let node = primaryQueue.insert(possibleNewWeight, neighbourOfPrimary.endVertex)
+                let node = primaryQueue.insert(possibleNewWeight + guessedRemainingDistance, neighbourOfPrimary.endVertex)
                 queueMapPrimary.set(neighbourOfPrimary.endVertex, node)
             } else {
-                primaryQueue.decreaseKey(queueMapPrimary.get(neighbourOfPrimary.endVertex)!, possibleNewWeight)
+                primaryQueue.decreaseKey(queueMapPrimary.get(neighbourOfPrimary.endVertex)!,
+                    possibleNewWeight + guessedRemainingDistance)
             }
 
         }
@@ -147,7 +151,18 @@ const relaxNeighbours = (hWPoint: Vertex,
     }
 }
 
+export const findDistance = (currentVertex: string, endVertex: string) => {
+    let coordinateCurrent = convertToArray(currentVertex)
+    let coordinateEnd = convertToArray(endVertex)
+    return Math.abs(coordinateCurrent[0] - coordinateEnd[0]) + Math.abs(coordinateCurrent[1] - coordinateEnd[1])
 
 
+}
 
+export const convertToArray = (coordinateAsString: string): number[] => {
+    let output = coordinateAsString.split(",")
+    let x  = parseInt(output[0])
+    let y = parseInt(output[1])
 
+    return [x, y]
+}

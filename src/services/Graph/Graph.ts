@@ -1,7 +1,7 @@
 import {Destination, Vertex} from "./GraphAddons";
 import {Pathfinding} from "./Algorithms/unidirecional/Pathfinding";
 import {Position} from "../utils/Postion";
-import {findBiDijkstraPath} from "./Algorithms/bidirectional/BiDijkstra";
+import {BiPathfindingFunction} from "./Algorithms/bidirectional/BiPathfinding";
 
 
 export class WeightedDirectedGraph {
@@ -34,20 +34,16 @@ export class WeightedDirectedGraph {
         this.graphMap.get(startVertex.toIdString())!.add(new Destination(endVertex, weight));
         this.reverseGraphMap.get(endVertex.toIdString())!.add(new Destination(startVertex, weight))
     }
+
     findPath(algorithm: Pathfinding, startVertex: Vertex, endVertex: Vertex) {
         return (algorithm.findPath(this.graphMap, startVertex, endVertex))
     }
 
-    findBiDijkstra(startVertex: Vertex, endVertex: Vertex) {
-        return findBiDijkstraPath(this.graphMap, this.reverseGraphMap,startVertex, endVertex)
-    }
-}
+    findBiPath(startVertex: Vertex, endVertex: Vertex, {biPathfinding}: BiPathfindingFunction) {
+        return biPathfinding(this.graphMap, this.reverseGraphMap, startVertex, endVertex)
 
-export class WeightedUndirectedGraph extends WeightedDirectedGraph {
-    addEdge(vertex1: Vertex, vertex2: Vertex, weight: number) {
-        super.addEdge(vertex1, vertex2, weight)
-        super.addEdge(vertex2, vertex1, weight)
     }
+
 }
 
 

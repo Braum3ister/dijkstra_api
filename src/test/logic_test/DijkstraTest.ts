@@ -79,13 +79,11 @@ describe("Dijkstra Test", () => {
     })
 
     it("Really Big Test", () => {
-        let weightedGraph = convertToWeightedGraph(100, 100, new Set())
+        let weightedGraph = convertToWeightedGraph(100, 200, new Set())
         let startVertex = new Vertex("12,42")
-        let endVertex = new Vertex("88,88")
+        let endVertex = new Vertex("88,199")
         let output = weightedGraph.findBiDijkstra(startVertex, endVertex)
-        console.log(findBiggestElement(output.backwardDistanceMap))
-        console.log(findBiggestElement(output.forwardDistanceMap))
-        expect(output.distance).to.equal(122)
+        expect(output.distance).to.equal(233)
     })
 
 })
