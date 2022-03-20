@@ -1,7 +1,7 @@
 import {expect} from "chai"
-import {convertToWeightedGraph, WeightedDirectedGraph} from "../../services/Graph/Graph";
-import {Vertex} from "../../services/Graph/GraphAddons";
-import {DijkstraAlgorithm} from "../../services/Graph/Algorithms/uni-direcional/DijkstraAlgorithm";
+import {convertToWeightedGraph, WeightedDirectedGraph} from "../../services/graph/Graph";
+import {Vertex} from "../../services/graph/GraphAddons";
+import {DijkstraAlgorithm} from "../../services/graph/algorithms/uni-direcional/DijkstraAlgorithm";
 
 
 describe("Dijkstra Test", () => {

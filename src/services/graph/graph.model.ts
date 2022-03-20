@@ -1,8 +1,8 @@
 import {Destination, Vertex} from "./graph-addons.model";
 
 import {Position} from "../utils/position.utils";
-import {BiPathfindingFunction} from "./Algorithms/bi-directional/bi-pathfiding.algorithm";
-import {Pathfinding} from "./Algorithms/uni-direcional/pathfiding.algorithm";
+import {BiPathfindingFunction} from "./algorithms/bi-directional/bi-pathfiding.algorithm";
+import {Pathfinding} from "./algorithms/uni-direcional/pathfiding.algorithm";
 
 
 

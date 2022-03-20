@@ -1,6 +1,6 @@
 import express from "express"
 import "dotenv/config"
-import logger from "./utils/logger"
+import logger from "./utils/logger.test"
 import cors from "cors"
 import apiRouter from "./routes/api-router"
 

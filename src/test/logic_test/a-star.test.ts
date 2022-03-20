@@ -1,8 +1,8 @@
 import {expect} from "chai"
-import {convertToWeightedGraph} from "../../services/Graph/Graph";
-import {Vertex} from "../../services/Graph/GraphAddons";
+import {convertToWeightedGraph} from "../../services/graph/Graph";
+import {Vertex} from "../../services/graph/GraphAddons";
 
-import {AStarAlgorithm} from "../../services/Graph/Algorithms/uni-direcional/AStarAlgorithm";
+import {AStarAlgorithm} from "../../services/graph/algorithms/uni-direcional/AStarAlgorithm";
 
 
 describe("AStarAlgorithm Test", () => {

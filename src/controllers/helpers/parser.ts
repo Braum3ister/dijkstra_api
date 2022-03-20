@@ -1,6 +1,6 @@
 import {Position} from "../../services/utils/Postion";
 import {Request} from "express";
-import {convertToWeightedGraph} from "../../services/Graph/Graph";
+import {convertToWeightedGraph} from "../../services/graph/Graph";
 
 export let convertWalls = (walls: number[][]) => {
     let posOutputAsString: Set<string> = new Set()
