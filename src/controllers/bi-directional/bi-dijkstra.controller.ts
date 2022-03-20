@@ -3,7 +3,7 @@ import {Request, Response} from "express"
 
 import {makeWeightedGraph} from "../helpers/parser";
 import {startBiPathfinding} from "./bi-pathfiding.controller";
-import {findBiDijkstraPath} from "../../services/graph/algorithms/bi-directional/BiDijkstra";
+import {findBiDijkstraPath} from "../../services/graph/algorithms/bi-directional/bi-dijkstra.algorithm";
 
 
 

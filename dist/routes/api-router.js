@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const dijkstra_router_1 = require("./api/dijkstra.router");
+const a_star_router_1 = require("./api/a-star.router");
+const bi_dijkstra_router_1 = require("./api/bi-dijkstra.router");
+const bi_a_star_router_1 = require("./api/bi-a-star.router");
+const apiRouter = (0, express_1.Router)();
+apiRouter.use("/dijkstra", dijkstra_router_1.router);
+apiRouter.use("/astar", a_star_router_1.router);
+apiRouter.use("/bidijkstra", bi_dijkstra_router_1.router);
+apiRouter.use("/biastar", bi_a_star_router_1.router);
+exports.default = apiRouter;

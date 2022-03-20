@@ -1,7 +1,8 @@
 import {expect} from "chai"
-import {convertToWeightedGraph, WeightedDirectedGraph} from "../../services/graph/Graph";
-import {Vertex} from "../../services/graph/GraphAddons";
-import {DijkstraAlgorithm} from "../../services/graph/algorithms/uni-direcional/DijkstraAlgorithm";
+import {convertToWeightedGraph, WeightedDirectedGraph} from "../../services/graph/graph.model";
+import {Vertex} from "../../services/graph/graph-addons.model";
+import {DijkstraAlgorithm} from "../../services/graph/algorithms/uni-direcional/dijkstra.algorithm";
+import {findBiDijkstraPath} from "../../services/graph/algorithms/bi-directional/bi-dijkstra.algorithm";
 
 
 describe("Dijkstra Test", () => {
@@ -46,7 +47,9 @@ describe("Dijkstra Test", () => {
     })
 
     it("BiDijkstraGraph BasicGraph", () => {
-        expect(weightedGraph.findBiDijkstra(startVertex, endVertex).distance).to.equal(10)
+        expect(weightedGraph.findBiPath(startVertex, endVertex, {
+            biPathfinding: findBiDijkstraPath
+        }).distance).to.equal(10)
     })
 
     it("Advanced Graph Dijkstra", () => {
@@ -56,7 +59,9 @@ describe("Dijkstra Test", () => {
 
     it("Advance Graph BiDijkstra", () => {
         let advancedGraph = setUpAdvancedGraph()
-        let output = advancedGraph.findBiDijkstra(A, F)
+        let output = advancedGraph.findBiPath(A, F, {
+            biPathfinding: findBiDijkstraPath
+        })
         expect(output.distance).to.equal(6)
     })
 
@@ -72,7 +77,9 @@ describe("Dijkstra Test", () => {
         let newWeightedGraph = convertToWeightedGraph(20, 20, new Set())
         let startVertex = new Vertex("1,2")
         let endVertex = new Vertex("15,8")
-        let output = newWeightedGraph.findBiDijkstra(startVertex, endVertex)
+        let output = newWeightedGraph.findBiPath(startVertex, endVertex,{
+            biPathfinding: findBiDijkstraPath
+        })
         expect(output.distance).to.equal(20)
         console.log(findBiggestElement(output.backwardDistanceMap))
         console.log(findBiggestElement(output.forwardDistanceMap))
@@ -82,7 +89,9 @@ describe("Dijkstra Test", () => {
         let weightedGraph = convertToWeightedGraph(100, 200, new Set())
         let startVertex = new Vertex("12,42")
         let endVertex = new Vertex("88,199")
-        let output = weightedGraph.findBiDijkstra(startVertex, endVertex)
+        let output = weightedGraph.findBiPath(startVertex, endVertex, {
+            biPathfinding: findBiDijkstraPath
+        })
         expect(output.distance).to.equal(233)
     })
 
